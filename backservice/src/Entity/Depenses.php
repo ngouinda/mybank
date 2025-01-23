@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\DepensesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: DepensesRepository::class)]
 class Depenses
@@ -14,13 +15,17 @@ class Depenses
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $montant = null;
+    #[ORM\Column(type: Types::FLOAT)]
+    #[Assert\NotBlank]
+    #[Assert\GreaterThan(0)]
+    private ?float $montant = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'depenses')]
@@ -32,12 +37,12 @@ class Depenses
         return $this->id;
     }
 
-    public function getMontant(): ?string
+    public function getMontant(): ?float
     {
         return $this->montant;
     }
 
-    public function setMontant(string $montant): static
+    public function setMontant(float $montant): static
     {
         $this->montant = $montant;
 

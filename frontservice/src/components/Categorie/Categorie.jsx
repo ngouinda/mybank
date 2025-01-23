@@ -28,25 +28,63 @@ function Categories() {
     };
 
     return (
-        <div>
-            <h1>Liste des catégories</h1>
-            <ul>
-                {categories.map((category) => (
-                    <li key={category.id}>
-                        {category.name}
-                        <button onClick={() => handleDelete(category.id)}>Supprimer</button>
-                    </li>
-                ))}
-            </ul>
-            <h2>Ajouter une catégorie</h2>
-            <input
+<div className="container mt-5">
+      <h1 className="text-center mb-4 text-primary">Liste des Catégories</h1>
+
+      {/* Liste des catégories */}
+      <div className="card mb-4">
+        <div className="card-header">
+          <h5 className="mb-0">Catégories Disponibles</h5>
+        </div>
+        <ul className="list-group list-group-flush">
+          {categories.length > 0 ? (
+            categories.map((category) => (
+              <li key={category.id} className="list-group-item d-flex justify-content-between align-items-center">
+                <span>{category.name}</span>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleDelete(category.id)}
+                >
+                  Supprimer
+                </button>
+              </li>
+            ))
+          ) : (
+            <li className="list-group-item text-center">Aucune catégorie enregistrée</li>
+          )}
+        </ul>
+      </div>
+
+      {/* Formulaire pour ajouter une catégorie */}
+      <h2 className="text-center mb-4 text-success">Ajouter une Catégorie</h2>
+      <div className="card">
+        <div className="card-body">
+          <form>
+            {/* Nom de la catégorie */}
+            <div className="form-group mb-3">
+              <label htmlFor="name" className="form-label">Nom de la catégorie</label>
+              <input
                 type="text"
-                placeholder="Nom de la catégorie"
+                id="name"
+                className="form-control"
+                placeholder="Entrez le nom de la catégorie"
                 value={newCategory.name}
                 onChange={(e) => setNewCategory({ name: e.target.value })}
-            />
-            <button onClick={handleCreate}>Ajouter</button>
+              />
+            </div>
+
+            {/* Bouton Ajouter */}
+            <button
+              type="button"
+              className="btn btn-primary w-100"
+              onClick={handleCreate}
+            >
+              Ajouter la Catégorie
+            </button>
+          </form>
         </div>
+      </div>
+    </div>
     );
 }
 
